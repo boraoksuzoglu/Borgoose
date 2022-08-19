@@ -15,8 +15,8 @@ describe('BORGOOSE', () => {
         describe("File Management", () => {
 
             beforeAll(() => {
-                fs.unlinkSync(data_file)  
-                const bdb = new Borgoose(data_file)
+                fs.unlinkSync(data_file)
+                new Borgoose(data_file)
             })
 
             // Create JSON file
@@ -33,7 +33,7 @@ describe('BORGOOSE', () => {
             // Unkown option values
             test('Should create Error because entered unkown options values.', () => {
                 try {
-                    const unkown_option_error = new Borgoose(data_file, {bora: true})
+                    new Borgoose(data_file, {bora: true})
                 } catch(err) {
                     expect(err.message).toEqual('Unkown option value')
                 }
@@ -42,7 +42,7 @@ describe('BORGOOSE', () => {
             // Path is undefined
             test('Should create Error because path is not entered.', () => {
                 try {
-                    const path_is_missing = new Borgoose()
+                    new Borgoose()
                 } catch(err) {
                     expect(err.message).toEqual("Path is not defined")
                 }
