@@ -2,6 +2,8 @@
 
  A Simple local JSON database
 
+ [![npm version](https://badge.fury.io/js/borgoose.svg)](https://badge.fury.io/js/borgoose) [![CodeFactor](https://www.codefactor.io/repository/github/boraoksuzoglu/borgoose/badge)](https://www.codefactor.io/repository/github/boraoksuzoglu/borgoose)
+ 
 ---
 
 ## Install
