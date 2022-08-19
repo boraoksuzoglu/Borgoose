@@ -36,11 +36,23 @@ describe('BORGOOSE', () => {
 
                 expect(createInstance).toThrow('Unkown option value')
             })
-            // Path is undefined
-            test('Should create Error because path is not entered.', () => {
+            // Options is not valid
+            test('Should create Error when options is not an object.', () => {
+                const createInstance = () => new Borgoose(data_file, [])
+
+                expect(createInstance).toThrow('Options is not valid')
+            })
+            // Path is not provided
+            test('Should create Error when path is not provided.', () => {
                 const createInstance = () => new Borgoose()
 
-                expect(createInstance).toThrow('Path is not defined')
+                expect(createInstance).toThrow('Path is not valid')
+            })
+            // Path is not valid
+            test('Should create Error when path is not a string.', () => {
+                const createInstance = () => new Borgoose([1,2,3])
+
+                expect(createInstance).toThrow('Path is not valid')
             })
         })
 
