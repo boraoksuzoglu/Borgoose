@@ -25,7 +25,7 @@ class Borgoose {
     }
 
     sync() {
-        this.write(this.storage)
+        fs.writeFileSync(this.path, JSON.stringify(this.storage))
     }
 
     write(array) {
@@ -38,7 +38,7 @@ class Borgoose {
         if (this.options.syncOnWrite) this.sync()
     }
     
-    // NEW OBJECT
+    // CREATE
 
     create(object) {
         this.storage.push(object)
