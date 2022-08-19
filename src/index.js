@@ -29,8 +29,8 @@ class Borgoose {
     }
 
     write(array) {
-        fs.writeFileSync(this.path, JSON.stringify(array))
-        this.storage = array
+        this.storage = _.cloneDeep(array)
+        this.sync()
     }
 
     shuffle() {
