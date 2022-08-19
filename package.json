@@ -1,0 +1,24 @@
+{
+  "name": "borgoose",
+  "version": "1.0.0",
+  "description": "A Simple local JSON database",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/boraoksuzoglu/borgoose"
+  },
+  "author": "boraoksuzoglu",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.5.2"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
