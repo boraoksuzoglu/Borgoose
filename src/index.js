@@ -7,9 +7,11 @@ const default_options = {
 
 class Borgoose {
     constructor(filePath, options = default_options) {
-        if (!filePath || !filePath.length) throw new Error('Path is not defined')
+        if (!filePath || typeof filePath !== 'string') throw new Error('Path is not valid')
         this.path = filePath.slice(filePath.length - 5) != ".json" ? filePath + ".json" : filePath
         this.storage =  new Array()
+
+        if (!options || Array.isArray(options) || typeof options !== 'object') throw new Error('Options is not valid')
         if (!_.isMatch(default_options, options)) throw new Error('Unkown option value')
         this.options = options
         this.init()
