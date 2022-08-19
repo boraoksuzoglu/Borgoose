@@ -7,9 +7,21 @@
     "test": "jest",
     "start": "node src/index"
   },
+  "keywords": [
+    "json",
+    "database",
+    "storage",
+    "localstorage",
+    "lodash",
+    "local"
+  ],
   "repository": {
     "type": "git",
-    "url": "github.com/boraoksuzoglu/borgoose"
+    "url": "https://github.com/boraoksuzoglu/borgoose.git"
+  },
+  "homepage": "https://github.com/boraoksuzoglu/borgoose",
+  "bugs": {
+    "url": "https://github.com/boraoksuzoglu/borgoose/issues"
   },
   "author": "boraoksuzoglu",
   "license": "MIT",
