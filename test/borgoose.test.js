@@ -32,20 +32,27 @@ describe('BORGOOSE', () => {
         describe("Errors", () => {
             // Unkown option values
             test('Should create Error because entered unkown options values.', () => {
-                try {
-                    new Borgoose(data_file, {bora: true})
-                } catch(err) {
-                    expect(err.message).toEqual('Unkown option value')
-                }
-                
+                const createInstance = () => new Borgoose(data_file, {bora: true})
+
+                expect(createInstance).toThrow('Unkown option value')
             })
-            // Path is undefined
-            test('Should create Error because path is not entered.', () => {
-                try {
-                    new Borgoose()
-                } catch(err) {
-                    expect(err.message).toEqual("Path is not defined")
-                }
+            // Options is not valid
+            test('Should create Error when options is not an object.', () => {
+                const createInstance = () => new Borgoose(data_file, [])
+
+                expect(createInstance).toThrow('Options is not valid')
+            })
+            // Path is not provided
+            test('Should create Error when path is not provided.', () => {
+                const createInstance = () => new Borgoose()
+
+                expect(createInstance).toThrow('Path is not valid')
+            })
+            // Path is not valid
+            test('Should create Error when path is not a string.', () => {
+                const createInstance = () => new Borgoose([1,2,3])
+
+                expect(createInstance).toThrow('Path is not valid')
             })
         })
 
