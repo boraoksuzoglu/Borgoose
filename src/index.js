@@ -1,6 +1,5 @@
 const fs = require("fs")
 const _ = require("lodash")
-const path = require("path")
 
 const default_options = {
     syncOnWrite: true,
