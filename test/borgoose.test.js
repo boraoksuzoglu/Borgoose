@@ -32,20 +32,15 @@ describe('BORGOOSE', () => {
         describe("Errors", () => {
             // Unkown option values
             test('Should create Error because entered unkown options values.', () => {
-                try {
-                    new Borgoose(data_file, {bora: true})
-                } catch(err) {
-                    expect(err.message).toEqual('Unkown option value')
-                }
-                
+                const createInstance = () => new Borgoose(data_file, {bora: true})
+
+                expect(createInstance).toThrow('Unkown option value')
             })
             // Path is undefined
             test('Should create Error because path is not entered.', () => {
-                try {
-                    new Borgoose()
-                } catch(err) {
-                    expect(err.message).toEqual("Path is not defined")
-                }
+                const createInstance = () => new Borgoose()
+
+                expect(createInstance).toThrow('Path is not defined')
             })
         })
 
