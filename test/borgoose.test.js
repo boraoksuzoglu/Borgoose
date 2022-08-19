@@ -147,7 +147,7 @@ describe('BORGOOSE', () => {
             })
             // Delete single data
             test('Should delete a single data.', () => {
-                // MAIN F vxcUNCTION
+                // MAIN FUNCTION
                 bdb.deleteOne({name: 'sebnem'})
 
                 expect(getJSON()).toEqual([{id: 1, name: "bora", age: 19}, {id: 2, name: "burak", age: 19}, {id: 3, name: "baris", age: 26}])
