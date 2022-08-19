@@ -25,7 +25,7 @@ class Borgoose {
     }
 
     sync() {
-        fs.writeFileSync(this.path, JSON.stringify(this.storage))
+        this.write(this.storage)
     }
 
     write(array) {
