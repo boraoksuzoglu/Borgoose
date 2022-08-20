@@ -1,109 +1,109 @@
-const fs = require("fs")
-const _ = require("lodash")
+const fs = require('fs')
+const _ = require('lodash')
 
 const default_options = {
-    syncOnWrite: true,
+	syncOnWrite: true,
 }
 
 class Borgoose {
-    constructor(filePath, options = default_options) {
-        if (!filePath || typeof filePath !== 'string') throw new Error('Path is not valid')
-        this.path = filePath.slice(filePath.length - 5) != ".json" ? filePath + ".json" : filePath
-        this.storage =  new Array()
+	constructor(filePath, options = default_options) {
+		if (!filePath || typeof filePath !== 'string') throw new Error('Path is not valid')
+		this.path = filePath.slice(filePath.length - 5) != '.json' ? filePath + '.json' : filePath
+		this.storage = new Array()
 
-        if (!options || Array.isArray(options) || typeof options !== 'object') throw new Error('Options is not valid')
-        if (!_.isMatch(default_options, options)) throw new Error('Unkown option value')
-        this.options = options
-        this.init()
-    }
+		if (!options || Array.isArray(options) || typeof options !== 'object')
+			throw new Error('Options is not valid')
+		if (!_.isMatch(default_options, options)) throw new Error('Unkown option value')
+		this.options = options
+		this.init()
+	}
 
-    init() {
-        if (!fs.existsSync(this.path)) {
-            fs.appendFileSync(this.path, "[]", (err) => {
-                if (err) throw err
-            })
-        }
-        this.storage = JSON.parse(fs.readFileSync(this.path))
-    }
+	init() {
+		if (!fs.existsSync(this.path)) {
+			fs.appendFileSync(this.path, '[]', (err) => {
+				if (err) throw err
+			})
+		}
+		this.storage = JSON.parse(fs.readFileSync(this.path))
+	}
 
-    sync() {
-        fs.writeFileSync(this.path, JSON.stringify(this.storage))
-    }
+	sync() {
+		fs.writeFileSync(this.path, JSON.stringify(this.storage))
+	}
 
-    write(array) {
-        this.storage = _.cloneDeep(array)
-        this.sync()
-    }
+	write(array) {
+		this.storage = _.cloneDeep(array)
+		this.sync()
+	}
 
-    shuffle() {
-        this.storage = _.shuffle(this.storage)
-        if (this.options.syncOnWrite) this.sync()
-    }
-    
-    // CREATE
+	shuffle() {
+		this.storage = _.shuffle(this.storage)
+		if (this.options.syncOnWrite) this.sync()
+	}
 
-    create(object) {
-        this.storage.push(object)
-        if (this.options.syncOnWrite) this.sync()
-    }
+	// CREATE
 
-    insertOne(object) {
-        this.create(object)
-    }
+	create(object) {
+		this.storage.push(object)
+		if (this.options.syncOnWrite) this.sync()
+	}
 
-    insertMany(array) {
-        for (let object of array) {
-            this.create(object)
-        }
-    }
+	insertOne(object) {
+		this.create(object)
+	}
 
-    // FIND
+	insertMany(array) {
+		for (let object of array) {
+			this.create(object)
+		}
+	}
 
-    find(filter) {
-        return _.filter(this.storage, filter)
-    }
+	// FIND
 
-    findOne(filter) {
-        return _.find(this.storage, filter)
-    }
+	find(filter) {
+		return _.filter(this.storage, filter)
+	}
 
-    findMany(filter) {
-        return this.find(filter)
-    }
+	findOne(filter) {
+		return _.find(this.storage, filter)
+	}
 
-    // DELETE
+	findMany(filter) {
+		return this.find(filter)
+	}
 
-    deleteOne(filter) {
-        this.storage = _.reject(this.storage, _.find(this.storage, filter))
-        if (this.options.syncOnWrite) this.sync()
-    }
+	// DELETE
 
-    deleteMany(filter) {
-        this.storage = _.reject(this.storage, filter)
-        if (this.options.syncOnWrite) this.sync()
-    }
+	deleteOne(filter) {
+		this.storage = _.reject(this.storage, _.find(this.storage, filter))
+		if (this.options.syncOnWrite) this.sync()
+	}
 
-    // UPDATE
+	deleteMany(filter) {
+		this.storage = _.reject(this.storage, filter)
+		if (this.options.syncOnWrite) this.sync()
+	}
 
-    updateMany(filter, object) {
-        for (let obj of this.storage) {
-            if (!_.isMatch(obj, filter)) continue
-            for (let key in object) {
-                obj[key] = object[key]
-            }
-        }
-        if (this.options.syncOnWrite) this.sync()
-    }
+	// UPDATE
 
-    updateOne(filter, object) {
-        let data = this.findOne(filter)
-        for (let key in object) {
-            data[key] = object[key]
-        }
-        this.storage[data] = data
-        if (this.options.syncOnWrite) this.sync()
-    }
+	updateMany(filter, object) {
+		for (let obj of this.storage) {
+			if (!_.isMatch(obj, filter)) continue
+			for (let key in object) {
+				obj[key] = object[key]
+			}
+		}
+		if (this.options.syncOnWrite) this.sync()
+	}
 
+	updateOne(filter, object) {
+		let data = this.findOne(filter)
+		for (let key in object) {
+			data[key] = object[key]
+		}
+		this.storage[data] = data
+		if (this.options.syncOnWrite) this.sync()
+	}
 }
 
 module.exports = Borgoose
