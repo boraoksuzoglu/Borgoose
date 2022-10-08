@@ -13,8 +13,10 @@ class Borgoose {
 
 		if (!options || Array.isArray(options) || typeof options !== 'object')
 			throw new Error('Options is not valid')
-		if (!_.isMatch(default_options, options)) throw new Error('Unkown option value')
-		this.options = options
+		if (_.difference(_.keys(options), _.keys(default_options)).length != 0)
+			throw new Error('Unkown option value')
+
+		this.options = _.merge(default_options, options)
 		this.init()
 	}
 
