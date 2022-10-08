@@ -77,6 +77,10 @@ class Borgoose {
 		return this.find(filter)
 	}
 
+	findById(id) {
+		return _.filter(this.storage, { _id: id })
+	}
+
 	// DELETE
 
 	deleteOne(filter) {
