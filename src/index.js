@@ -1,8 +1,10 @@
 const fs = require('fs')
 const _ = require('lodash')
+const { v4: uuidv4 } = require('uuid')
 
 const default_options = {
 	syncOnWrite: true,
+	createWithId: false,
 }
 
 class Borgoose {
@@ -46,6 +48,7 @@ class Borgoose {
 	// CREATE
 
 	create(object) {
+		object = { _id: uuidv4(), ...object }
 		this.storage.push(object)
 		if (this.options.syncOnWrite) this.sync()
 	}
