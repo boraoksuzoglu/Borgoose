@@ -1,8 +1,10 @@
 const fs = require('fs')
 const _ = require('lodash')
+const { v4: uuidv4 } = require('uuid')
 
 const default_options = {
 	syncOnWrite: true,
+	createWithId: false,
 }
 
 class Borgoose {
@@ -13,8 +15,10 @@ class Borgoose {
 
 		if (!options || Array.isArray(options) || typeof options !== 'object')
 			throw new Error('Options is not valid')
-		if (!_.isMatch(default_options, options)) throw new Error('Unkown option value')
-		this.options = options
+		if (_.difference(_.keys(options), _.keys(default_options)).length != 0)
+			throw new Error('Unkown option value')
+
+		this.options = _.merge(default_options, options)
 		this.init()
 	}
 
@@ -44,6 +48,7 @@ class Borgoose {
 	// CREATE
 
 	create(object) {
+		if (this.options.createWithId) object = { _id: uuidv4(), ...object }
 		this.storage.push(object)
 		if (this.options.syncOnWrite) this.sync()
 	}
