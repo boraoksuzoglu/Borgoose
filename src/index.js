@@ -48,7 +48,7 @@ class Borgoose {
 	// CREATE
 
 	create(object) {
-		object = { _id: uuidv4(), ...object }
+		if (this.options.createWithId) object = { _id: uuidv4(), ...object }
 		this.storage.push(object)
 		if (this.options.syncOnWrite) this.sync()
 	}
