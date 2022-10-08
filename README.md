@@ -1,6 +1,8 @@
 # Borgoose
 
-A Simple local JSON database
+Borgoose is great database management library for small projects. With Borgoose, you can easily store your data in a local JSON file, which makes it easy to access and use.
+
+Borgoose takes functions from Mongoose. This will make it easy for you to migrate your project to MongoDB in the future.
 
 [![npm version](https://badge.fury.io/js/borgoose.svg)](https://badge.fury.io/js/borgoose) [![CodeFactor](https://www.codefactor.io/repository/github/boraoksuzoglu/borgoose/badge)](https://www.codefactor.io/repository/github/boraoksuzoglu/borgoose)
 
@@ -18,6 +20,8 @@ npm i borgoose
 
 - [insertOne](#insert)
 - [insertMany](#insert)
+- [find](#find)
+- [findById](#find)
 - [findOne](#find)
 - [findMany](#find)
 - [updateOne](#update)
@@ -38,14 +42,15 @@ npm i borgoose
 const Borgoose = require('borgoose')
 // default value of syncOnWrite is true
 // I'm just writing you to see that such a setting exist :)
-const bdb = new Borgoose('db.json', { syncOnWrite: true })
+const bdb = new Borgoose('db.json', { syncOnWrite: true, createWithId: true })
 ```
 
 ## Options
 
-| Option      | Type    | Description                                                   | Default |
-| ----------- | ------- | ------------------------------------------------------------- | ------- |
-| syncOnWrite | Boolean | Automatically saves data to JSON file after each modification | true    |
+| Option       | Type    | Description                                                   | Default |
+| ------------ | ------- | ------------------------------------------------------------- | ------- |
+| syncOnWrite  | Boolean | Automatically saves data to JSON file after each modification | true    |
+| createWithId | Boolean | Automatically generate ID when you create new Object          | false   |
 
 ## Examples
 
@@ -67,6 +72,9 @@ bdb.insertMany([
 ```js
 // Find single data
 bdb.findOne({ age: 19 })
+
+// Find by ID
+bdb.findById('b0df200b-00f3-4a5b-8389-233e928e84e6')
 
 // You can also use functions
 bdb.findOne((o) => o.age > 25)
